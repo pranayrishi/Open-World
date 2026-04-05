@@ -40,6 +40,7 @@ export class Engine {
       antialias: false,
       powerPreference: "high-performance",
       stencil: false,
+      logarithmicDepthBuffer: true,
     });
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;

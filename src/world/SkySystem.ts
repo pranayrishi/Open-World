@@ -1,6 +1,7 @@
 import * as THREE from "three";
 
 export const skyVert = `
+#include <logdepthbuf_pars_vertex>
 varying vec3 v_worldPosition;
 varying vec3 v_viewDirection;
 
@@ -9,10 +10,12 @@ void main() {
   v_worldPosition = worldPosition.xyz;
   v_viewDirection = normalize(cameraPosition - worldPosition.xyz);
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  #include <logdepthbuf_vertex>
 }
 `;
 
 export const skyFrag = `
+#include <logdepthbuf_pars_fragment>
 uniform float u_time;
 uniform vec3 u_sunDirection;
 uniform float u_sunElevation;
@@ -128,6 +131,7 @@ void main() {
   finalSky = mix(finalSky, rayleighColor, 0.1 * dayFactor);
   
   gl_FragColor = vec4(finalSky, 1.0);
+  #include <logdepthbuf_fragment>
 }
 `;
 

@@ -89,6 +89,7 @@ export class VegetationSystem {
   private createGrassMaterial(): void {
     this.grassMaterial = new THREE.ShaderMaterial({
       vertexShader: `
+        #include <logdepthbuf_pars_vertex>
         uniform float u_time;
         uniform vec3 u_playerPosition;
         attribute vec3 aOffset;
@@ -130,9 +131,11 @@ export class VegetationSystem {
           vec3 worldPos = pos + aOffset;
           vec4 mvPosition = modelViewMatrix * vec4(worldPos, 1.0);
           gl_Position = projectionMatrix * mvPosition;
+          #include <logdepthbuf_vertex>
         }
       `,
       fragmentShader: `
+        #include <logdepthbuf_pars_fragment>
         uniform vec3 u_baseColor;
         uniform vec3 u_tipColor;
         varying vec2 v_uv;
@@ -144,6 +147,7 @@ export class VegetationSystem {
           float ao = smoothstep(0.0, 0.15, v_height);
           color *= 0.7 + ao * 0.3;
           gl_FragColor = vec4(color, 1.0);
+          #include <logdepthbuf_fragment>
         }
       `,
       uniforms: {

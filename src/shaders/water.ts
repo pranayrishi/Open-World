@@ -1,6 +1,8 @@
 export const waterVert = `
 precision highp float;
 
+#include <logdepthbuf_pars_vertex>
+
 uniform float u_time;
 
 varying vec3 v_worldPosition;
@@ -34,11 +36,14 @@ void main() {
   v_fresnel = fresnel;
   
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+  #include <logdepthbuf_vertex>
 }
 `;
 
 export const waterFrag = `
 precision highp float;
+
+#include <logdepthbuf_pars_fragment>
 
 uniform float u_time;
 uniform vec3 u_sunDirection;
@@ -137,5 +142,6 @@ void main() {
   float alpha = mix(0.6, 0.9, v_fresnel);
   
   gl_FragColor = vec4(finalColor, alpha);
+  #include <logdepthbuf_fragment>
 }
 `;

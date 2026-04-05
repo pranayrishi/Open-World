@@ -28,7 +28,7 @@ export class ChunkManager {
   private playerPosition: THREE.Vector3 = new THREE.Vector3();
   private currentChunk: { x: number; z: number } = { x: 0, z: 0 };
   private pendingLoads: { x: number; z: number; priority: number }[] = [];
-  private maxLoadsPerFrame = 1;
+  private maxLoadsPerFrame = 2;
   private loadingState: "init" | "loading" | "complete" = "init";
   private loadProgress = 0;
   private requiredChunks = 0;
